@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 AppDataSource.initialize().then(async () => {
 
-    // create express app
+    // se instancia express 
     const app = express()
     app.use(cors());
     app.use(express.json());

@@ -40,6 +40,8 @@ export class UserController {
     const userRepository = AppDataSource.getRepository(User)
 
     try {
+        //Antes de guardar el usuario, encriptamos su Pass
+        user.hasPassword();
         await userRepository.save(user)
     } catch (error) {
         return res.status(500).json({
