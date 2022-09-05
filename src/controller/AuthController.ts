@@ -27,7 +27,7 @@ class AuthController{
 
         //usamos el metodo findOneOrFail del repositorio con la condicion de la variable username 
         //si lo encuentra enviara un mensaje advirtiendo que no encontro al usuario con ese nombre de usuario
-        //si NO enviara un mensaje de error
+        //si NO enviara un mensaje de error sss
         try {
             user = await authRepo.findOneOrFail({
                 where:{

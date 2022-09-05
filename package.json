@@ -28,6 +28,6 @@
       "start": "ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
       "tsc" : "tsc",
-      "dev": "set debug=* && ts-node src/index.ts --respawn --transpileOnly ./src/index.ts"
+      "dev": "set debug=* && ts-node-dev src/index.ts --respawn --transpileOnly ./src/index.ts"
    }
 }

@@ -1,17 +1,14 @@
 import { IsEmail, IsNotEmpty } from "class-validator"
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Unique } from "typeorm"
+import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, Unique, OneToOne } from "typeorm"
 import * as bcrypt from "bcryptjs"
+import { Propietario} from "./Propietario"
 
 @Entity()
 @Unique(["username"])
+@Unique(["id"])
 export class User {
-
-    @PrimaryGeneratedColumn()
-    id: number
-
-    @Column()
-    @IsNotEmpty()
-    @IsEmail()
+        
+    @PrimaryColumn()
     username: string
 
     @Column()
@@ -21,6 +18,13 @@ export class User {
     @Column()
     @IsNotEmpty()
     role: string
+
+    @Column()
+    @IsNotEmpty()
+    id: number
+
+    @OneToOne(() => Propietario, (propietario) => propietario.username, {onDelete: 'CASCADE'})
+    propietario: Propietario;
 
     @CreateDateColumn()
     createdAt: Date

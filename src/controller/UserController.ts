@@ -3,6 +3,7 @@ import { User } from "../entity/User"
 import { AppDataSource } from "../data-source"
 import { validate } from "class-validator"
 import { request } from "http"
+import { stringify } from "querystring"
 
 export class UserController {
 
@@ -12,7 +13,7 @@ export class UserController {
     */
 
     //se define una constante con los 3 valores recibidos por el request
-    const {username, password, role} = req.body
+    const {username, password, role,id} = req.body
     
     //instancia una clase del de la entidad User
     const user = new User();
@@ -21,6 +22,7 @@ export class UserController {
     user.username= username;
     user.password= password;
     user.role = role;
+    user.id = id;
 
     //importamos la clase ValidationOptions para usarla como parametro en el await validate
     const validationOptions = {
@@ -89,6 +91,21 @@ export class UserController {
     } catch (error) {
         res.status(404).json({
             message: "Error al traer el usuario",
+            error: error.message
+        })
+    }
+   }
+
+   static getbyUsername = async (req: Request, res: Response) =>{
+    const {username} = req.params
+    const userRepository = AppDataSource.getRepository(User)
+
+    try {
+        const user = await userRepository.findOneByOrFail({username: String(username)})
+        res.send(user)
+    } catch (error) {
+        res.status(404).json({
+            message: "Error al traer el usuario por username",
             error: error.message
         })
     }
