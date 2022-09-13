@@ -8,10 +8,10 @@ const router= Router();
 
 
 router.post('/',[checkJwt],UserController.newUser);
-//router.post('/',UserController.newUser);
-router.get('/',UserController.getUsers);
-router.get('/username/:username',UserController.getbyUsername);
-router.delete('/:id',UserController.delete);
-router.patch('/:id',UserController.update);
+//  router.post('/',UserController.newUser);
+router.get('/',[checkJwt],UserController.getUsers);
+router.get('/username/:username',[checkJwt],UserController.getbyUsername);
+router.delete('/:username',[checkJwt],UserController.delete);
+router.patch('/:username',[checkJwt],UserController.update);
 
 export default router;

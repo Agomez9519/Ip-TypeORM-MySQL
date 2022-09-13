@@ -4,6 +4,8 @@ import { AppDataSource } from "../data-source"
 import { validate } from "class-validator"
 import { request } from "http"
 import { stringify } from "querystring"
+import * as jwt from "jsonwebtoken";
+import config from "../config/config";
 
 export class UserController {
 
@@ -51,10 +53,19 @@ export class UserController {
             error: error.message
     })
     }
+    const token = jwt.sign(
+        {username:username},
+        config.jwtSecret,{expiresIn:'1h'}           
+        
+    )
 
     return res.status(201).json({
-        message: "Usuario Creado"
+        message: "Usuario Creado",
+        token
     })    
+
+
+
    }
 
    static getUsers = async (req: Request, res: Response) =>{
