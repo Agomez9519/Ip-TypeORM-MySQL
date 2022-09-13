@@ -50,7 +50,7 @@ class AuthController{
 
         //Importamos la clase del config, la cual trae el token que usaremos para entrar a los endpoints
         const token = jwt.sign(
-            {userId:user.id,username},
+            {username:username},
             config.jwtSecret,{expiresIn:'1h'}           
             
         )

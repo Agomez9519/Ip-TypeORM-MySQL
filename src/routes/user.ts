@@ -7,10 +7,9 @@ import { checkJwt } from "../middlerware/jwt";
 const router= Router();
 
 
-//router.post('/',[checkJwt],UserController.newUser);
-router.post('/',UserController.newUser);
+router.post('/',[checkJwt],UserController.newUser);
+//router.post('/',UserController.newUser);
 router.get('/',UserController.getUsers);
-router.get('/:id',UserController.getbyId);
 router.get('/username/:username',UserController.getbyUsername);
 router.delete('/:id',UserController.delete);
 router.patch('/:id',UserController.update);

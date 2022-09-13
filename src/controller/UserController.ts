@@ -13,7 +13,7 @@ export class UserController {
     */
 
     //se define una constante con los 3 valores recibidos por el request
-    const {username, password, role,id} = req.body
+    const {username, password, role} = req.body
     
     //instancia una clase del de la entidad User
     const user = new User();
@@ -22,7 +22,7 @@ export class UserController {
     user.username= username;
     user.password= password;
     user.role = role;
-    user.id = id;
+
 
     //importamos la clase ValidationOptions para usarla como parametro en el await validate
     const validationOptions = {
@@ -81,21 +81,6 @@ export class UserController {
 
    }
 
-   static getbyId = async (req: Request, res: Response) =>{
-    const {id} = req.params
-    const userRepository = AppDataSource.getRepository(User)
-
-    try {
-        const user = await userRepository.findOneByOrFail({id: parseInt(id)})
-        res.send(user)
-    } catch (error) {
-        res.status(404).json({
-            message: "Error al traer el usuario",
-            error: error.message
-        })
-    }
-   }
-
    static getbyUsername = async (req: Request, res: Response) =>{
     const {username} = req.params
     const userRepository = AppDataSource.getRepository(User)
@@ -112,12 +97,12 @@ export class UserController {
    }
 
    static delete = async (req: Request, res: Response) => {
-    const {id} = req.params;
+    const {username} = req.params;
     const userRepository = AppDataSource.getRepository(User)
     let user: User;
 
     try {
-        user = await userRepository.findOneByOrFail({id: parseInt(id)})
+        user = await userRepository.findOneByOrFail({username: String(username)})
     }catch (error) {
         return res.status(404).json({
         message: "Error al traer el usuario",
@@ -126,7 +111,7 @@ export class UserController {
     }
 
     try {
-        await userRepository.delete(id);
+        await userRepository.delete(username);
         res.status(200).json({
             message:"Usuario Eliminado"
         })        
@@ -144,7 +129,7 @@ export class UserController {
     let user;
 
     //guardamos el id del usuario a actualizar que viene del request
-    const {id} = req.params;
+    const {username2} = req.params;
 
     //generamos el cuerpo de request con los atributos de nuestra clase Entity
     const {username, password, role} = req.body;
@@ -153,7 +138,7 @@ export class UserController {
     //Buscamos el usuario por su id, si lo encontramos cambiaremos los valores de sus atributos
     //del usuario por los ingresados en el request, si no lo encuentra genera un mensaje de error
     try {
-        user = await userRepository.findOneByOrFail ({id: parseInt(id)})
+        user = await userRepository.findOneByOrFail ({username: String(username2)})
         user.username = username;
         user.password = password;
         user.role = role;

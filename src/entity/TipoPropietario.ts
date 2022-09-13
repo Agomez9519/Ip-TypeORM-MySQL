@@ -1,5 +1,5 @@
 import { IsNotEmpty } from "class-validator";
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { Propietario } from "./Propietario";
 
 
@@ -15,8 +15,9 @@ export class TipoPropietario{
     @IsNotEmpty()
     descripcion:string;
 
-    @OneToOne(() => Propietario , (propietario) => propietario.tipoPropietario, {onDelete: 'CASCADE'})
-    propietario: Propietario;
+    //un tipo de propietario puede tener muchos propietarios
+    @OneToMany(() => Propietario , (propietario) => propietario.tipoPropietario)
+    propietarios: Propietario[];
 
     @CreateDateColumn()
     createdAt: Date

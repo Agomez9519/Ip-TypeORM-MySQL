@@ -26,10 +26,10 @@ export class TipoPropietarioController{
     static getTipos = async (req:Request, res:Response)=>{
         
                 //se instancia la clase repository anexandola con la clase Entity User
-            const userRepository = AppDataSource.getRepository(TipoPropietario)
+            const tipoRepository = AppDataSource.getRepository(TipoPropietario)
             let types;
             try {
-                types = await userRepository.find()
+                types = await tipoRepository.find()
             } catch (error) {
                 res.status(500).json({
                 message: "Error al traer los tipos de propietarios",

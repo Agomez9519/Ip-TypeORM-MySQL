@@ -32,15 +32,19 @@ export class Vehiculo{
     @IsNotEmpty()
     n_chasis:string;
 
-    @ManyToOne(() => Propietario, (propietario) => propietario.vehiculos)
+    //Muchos autos le pertenecen a un usuario, al eliminar un propietario, la tupla se elimina
+    @ManyToOne(() => Propietario, (propietario) => propietario.vehiculos,{cascade: true})
     @JoinColumn({name: "propietario_fk"}) 
     propietario: Propietario;
 
-    @OneToOne(() => TipoVehiculo)
+    @ManyToOne(() => TipoVehiculo, (tipoVehiculo) => tipoVehiculo.vehiculos,{
+        onDelete: "CASCADE"
+        ,onUpdate: "CASCADE"
+    })
     @JoinColumn({name: "tipo_vehiculo_fk"}) 
-    TipoVehiculo: TipoVehiculo;
+    tipoVehiculo: TipoVehiculo;
 
-    @OneToMany(() => Multa, (multa) => multa.vehiculo) 
+    @OneToMany(() => Multa, (multa) => multa.vehiculo)  
     multas: Multa[];
 
     @CreateDateColumn()

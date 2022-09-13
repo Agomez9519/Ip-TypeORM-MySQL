@@ -28,11 +28,16 @@ export class Propietario {
     @JoinColumn({name:"username_fk"})
     username:User;
 
+    //Un propietario posee nuchos vehiculos    
     @OneToMany(() => Vehiculo, (vehiculo) =>  vehiculo.propietario)
     vehiculos: Vehiculo[];
 
-    @OneToOne(() => TipoPropietario) 
-    @JoinColumn({name: "tipo_vehiculo_fk"}) 
+    //Muchos propieatarios pueden ser de un tipo de propietario
+    @ManyToOne(() => TipoPropietario, (tipoPropietario) => tipoPropietario.propietarios,{
+    onDelete: "CASCADE"
+    ,onUpdate: "CASCADE"
+})  
+    @JoinColumn({name: "tipo_propietario_fk"}) 
     tipoPropietario: TipoPropietario;
 
     @CreateDateColumn()

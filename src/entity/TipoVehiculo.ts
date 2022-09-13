@@ -1,5 +1,5 @@
 import { IsNotEmpty } from "class-validator";
-import { Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { Vehiculo } from "./Vehiculo";
 
 
@@ -15,8 +15,8 @@ export class TipoVehiculo{
     @IsNotEmpty()
     descripcion:string;
 
-    @OneToOne(() => Vehiculo, (vehiculo) => vehiculo.TipoVehiculo, {onDelete: 'CASCADE'})
-    vehiculo:Vehiculo;
+    @OneToMany(() => Vehiculo, (vehiculo) => vehiculo.tipoVehiculo)
+    vehiculos:Vehiculo[];
 
     @CreateDateColumn()
     createdAt: Date
